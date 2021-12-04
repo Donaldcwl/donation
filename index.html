@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Support Donald</title>
+    <meta name="description" content="Support Donald" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="css/normalize.css" />
+    <link rel="stylesheet" href="css/global.css" />
+    <!-- Load Stripe.js on your website. -->
+    <script src="https://js.stripe.com/v3/"></script>
+  </head>
+
+  <body>
+    <div class="sr-root">
+      <div class="sr-main" style="display: flex">
+        <header class="sr-header">
+          <div class="sr-header__logo">Support Donald</div>
+        </header>
+        <div class="sr-container">
+          <section class="container">
+            <h1>One-time Donation</h1>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K3173HeH3XcNFuZe01PN3tj"
+            >
+              Donate $5
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K3173HeH3XcNFuZjf9RZBew"
+            >
+              Donate $7
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K31XKHeH3XcNFuZiMyJFVbt"
+            >
+              Donate $10
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K3173HeH3XcNFuZEkfnQVny"
+            >
+              Donate $15
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K3173HeH3XcNFuZJlLQiYDY"
+            >
+              Donate $25
+            </button>
+            
+            <form class="custom-quantity-payment" onsubmit="event.preventDefault();">
+              <button
+                data-custom-quantity="custom_quantity1"
+                data-checkout-mode="payment"
+                data-price-id="price_1K32uuHeH3XcNFuZBF6XNo9f"
+              >
+                Donate $
+              </button>
+              <input type="number" name="custom_quantity" id="custom_quantity1" value="5" />
+            </form>
+
+
+            <!-- <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K30CzHeH3XcNFuZ3KFjdvX4"
+            >
+              Donate $5 once
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K31kQHeH3XcNFuZjmt9MvIp"
+            >
+              Donate $7 once
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K31l3HeH3XcNFuZmoPVj9dL"
+            >
+              Donate $10 once
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K31ldHeH3XcNFuZRDbQd95Z"
+            >
+              Donate $15 once
+            </button>
+            <button
+              data-checkout-mode="payment"
+              data-price-id="price_1K31mEHeH3XcNFuZHcDHPWWO"
+            >
+              Donate $25 once
+            </button>
+            
+            <div class="custom-quantity-payment">
+              <button
+                data-custom-quantity="custom_quantity"
+                data-checkout-mode="payment"
+                data-price-id="price_1K32Q5HeH3XcNFuZiDX0UQ7G"
+              >
+                Donate $
+              </button>
+              <input type="number" name="custom" id="custom_quantity" value="5" />
+            </div> -->
+          </section>
+          <section class="container">
+            <h1>Recurring Donation</h1>
+            <button
+              data-checkout-mode="subscription"
+              data-price-id="price_1K31oRHeH3XcNFuZ7M3VpLJA"
+            >
+              Donate $2 per month
+            </button>
+            <!-- <button
+              data-checkout-mode="subscription"
+              data-price-id="price_1K31ofHeH3XcNFuZ01QfOMmL"
+            >
+              Donate $2 per month
+            </button> -->
+
+            <form class="custom-quantity-payment" onsubmit="event.preventDefault();">
+              <button
+                data-custom-quantity="custom_quantity2"
+                data-checkout-mode="subscription"
+                data-price-id="price_1K33RUHeH3XcNFuZEJhH98qF"
+              >
+                Donate $
+              </button>
+              <input type="number" name="custom_quantity" id="custom_quantity2" value="5" />
+              <button
+                data-custom-quantity="custom_quantity2"
+                data-checkout-mode="subscription"
+                data-price-id="price_1K33RUHeH3XcNFuZEJhH98qF"
+              >
+                per month
+              </button>
+            </form>
+          </section>
+        </div>
+        <div id="error-message"></div>
+      </div>
+    </div>
+    <!-- <div class="banner">
+      <span>
+        Thanks
+      </span>
+    </div> -->
+
+    <script>
+      // Replace with your own publishable key: https://dashboard.stripe.com/test/apikeys
+      // const PUBLISHABLE_KEY =
+      //   "pk_test_51K304NHeH3XcNFuZ23nUEw4LPROpaSWHU0HYip4U50KdCgmEuj10cSqLEVlyUkVJ4IU3ocqt921gcVyWZaLIhMkE00cknTXmfp";
+      const PUBLISHABLE_KEY = 'pk_live_51K304NHeH3XcNFuZSbZkOQyvP4QEG9NfxsWKuOusE6XYIzjy0OZkyTL3XPXwr7QG8UJ9QJb8LjYX7p5eznoGM16d00F8zCJl4z';
+      // Replace with the domain you want your users to be redirected back to after payment
+      const DOMAIN = location.href.replace(/[^/]*$/, "");
+
+      const stripe = Stripe(PUBLISHABLE_KEY);
+
+      // Handle any errors from Checkout
+      const handleResult = function (result) {
+        if (result.error) {
+          var displayError = document.getElementById("error-message");
+          displayError.textContent = result.error.message;
+        }
+      };
+
+      document.querySelectorAll("button").forEach(function (button) {
+        button.addEventListener("click", function (e) {
+          const mode = e.target.dataset.checkoutMode;
+          const priceId = e.target.dataset.priceId;
+          const customQuantity = e.target.dataset.customQuantity
+          let quantity = 1
+          if (customQuantity) {
+            quantity = Math.ceil(document.getElementById(customQuantity).value)
+          }
+          const items = [{ price: priceId, quantity: quantity }];
+          // console.log(JSON.stringify(items))
+
+          // Make the call to Stripe.js to redirect to the checkout page
+          // with the sku or plan ID.
+          stripe
+            .redirectToCheckout({
+              mode: mode,
+              lineItems: items,
+              successUrl:
+                DOMAIN + "success.html?session_id={CHECKOUT_SESSION_ID}",
+              cancelUrl:
+                DOMAIN + "canceled.html?session_id={CHECKOUT_SESSION_ID}",
+            })
+            .then(handleResult);
+        });
+      });
+    </script>
+  </body>
+</html>
