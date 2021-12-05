@@ -194,5 +194,10 @@
         });
       });
     </script>
+    <script>
+      document.addEventListener('mousemove', function (e) {
+        document.body.style.background = `radial-gradient(at ${e.x/window.innerWidth*100}% ${e.y/window.innerHeight*100}%, #519693, #256dc2)`
+      })
+    </script>
   </body>
 </html>
